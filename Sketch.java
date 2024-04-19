@@ -9,7 +9,6 @@ public class Sketch extends PApplet {
   PImage imgCultist;
   PImage imgDevotee;
 
-
   // Initializes Empress of Light
   float fltEmpressLightX = 0;
   float fltEmpressLightY = 100;
@@ -37,7 +36,7 @@ public class Sketch extends PApplet {
    */
   public void setup() {
     imgCrimsonBackgroound = loadImage("Crimson_background.png");
-    imgEmpressLight = loadImage("Lunatic_Cultist.gif");
+    imgEmpressLight = loadImage("Lunatic_Cultist.gif"); // Empress of Light is the same as the cultist
     imgCultist = loadImage("Lunatic_Cultist.gif");
     imgDevotee = loadImage("Lunatic_Devotee.gif");
   }
@@ -90,7 +89,7 @@ public class Sketch extends PApplet {
    */
   public void calculateCultistPosition() {
     // Bounce upon collision with the edges of the screen
-    if (fltCultistX > width - 25 || fltCultistX < 0)
+    if (fltCultistX > width - 0 || fltCultistX < 30)
         intCultistSpeedX *= -1;
     fltCultistX += intCultistSpeedX;
     fltCultistY = 500;
