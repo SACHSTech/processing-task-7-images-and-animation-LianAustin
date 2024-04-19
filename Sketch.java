@@ -1,77 +1,98 @@
 import processing.core.PApplet;
-import processing.core.PImage; //import the PImage library
+import processing.core.PImage;
 
 public class Sketch extends PApplet {
 
-  PImage imgMeteor; // declare a global image variable
-  PImage imgMissile;
-  PImage imgBackground;
-  //
-
-  float fltMeteorX = -100;
-  float fltMeteorY = 0;
-
-  float fltMissileX = 200;
-  float fltMissileY = 400-50;
-
-  float fltCirX = 100;
-  float fltCirY = width/10;
-
-  float fltCirSpeedX = 2;
-  float fltCirSpeedY = 1;
+  // initializing images
+  PImage imgCrimsonBackgroound;
+  PImage imgEmpressLight;
+  PImage imgCultist;
+  PImage imgDevotee;
 
 
+  // Initializes Empress of Light
+  float fltEmpressLightX = 0;
+  float fltEmpressLightY = 100;
+  int intEmpressLightSpeedX = 1;
+  int intDegrees = 0;
+
+  // Initializes Cultist Devotee
+  float fltCultistX = 200;
+  float fltCultistY = 600;
+  int intCultistSpeedX = 1;
+  float fltPrevPosX = 0;
+  float fltPrevPosY = 0;
+  float fltCultistRotation = 0;
+
+  /**
+   * Called once at the beginning of execution
+   */
   public void settings() {
-    size(400, 400);
-
+    size(800, 600);
   }
 
+  /**
+   * Called once at the beginning of execution. Add initial set up
+   * values here i.e background, stroke, fill etc.
+   */
   public void setup() {
-
-    imgMeteor = loadImage("spaceMeteors_003.png"); // load the image into the program
-    //resize meteor
-    imgMeteor.resize(imgMeteor.width/4,imgMeteor.height/4);
-
-    // load missile
-    imgMissile = loadImage("spaceMissiles_006.png");
-
-    imgBackground = loadImage("spaceBack.jpeg");
-
-
-
-    // load rocket
-    // resize rocket
+    imgCrimsonBackgroound = loadImage("Crimson_background.png");
+    imgEmpressLight = loadImage("Lunatic_Cultist.gif");
+    imgCultist = loadImage("Lunatic_Cultist.gif");
+    imgDevotee = loadImage("Lunatic_Devotee.gif");
   }
 
+  /**
+   * Called repeatedly, anything drawn to the screen goes here
+   */
   public void draw() {
-    background(128);
-    image(imgBackground, 0, 0);
 
-    // draw Meteor and move
-    image(imgMeteor,fltMeteorX,fltMeteorY);
-    fltMeteorX += 1;
-    //fltMeteorY += 1;
+    // draws the crimson background
+    image(imgCrimsonBackgroound, 0, 0);
 
+    // updates the position of the cultist and the devotee
+    calculateEmpressPosition();
+    calculateCultistPosition();
 
-    // draw circle and move
-    circle(fltCirX, fltCirY, 20);
-    fltCirX += fltCirSpeedX;
-    fltCirY += fltCirSpeedY;
+    // drawing the cultist devotee
+    pushMatrix();
+    translate(fltCultistX, fltCultistY);
+    rotate(fltCultistRotation);
+    translate(-29, -16);
 
-    if (fltCirX < 0+10 || fltCirX > width-10) {
-      fltCirSpeedX *= -1;
-    }
+    image(imgDevotee, 0, 0);
+    popMatrix();
 
-    if (fltCirY < 0+10  || fltCirY > height-10) {
-      fltCirSpeedY *= -1;
-    }
+    // draws a rectangular cloud above the empress of light
+    fill(255);
+    rect(fltEmpressLightX - 10, fltEmpressLightY - 20, 90, 15);
 
-    // draw missle and move
-    image(imgMissile, fltMissileX, fltMissileY);
-    fltMissileY -= 0.5;
+    // draws the empress of light
+    image(imgEmpressLight, fltEmpressLightX, fltEmpressLightY);
+    intDegrees += 1;
+  }
 
+  /**
+   * Description: calculates the position of the Empress of Light
+   */
+  public void calculateEmpressPosition() {
+    // Bounce upon collision with the edges of the screen
+    int empressLightWidth = 100;
+    if (fltEmpressLightX > width - empressLightWidth || fltEmpressLightX < 0)
+        intEmpressLightSpeedX *= -1;
 
+    fltEmpressLightX += intEmpressLightSpeedX;
+    fltEmpressLightY += sin(radians(intDegrees));
+  }
 
-
+  /**
+   * Calculates the position of the cultist devotee
+   */
+  public void calculateCultistPosition() {
+    // Bounce upon collision with the edges of the screen
+    if (fltCultistX > width - 25 || fltCultistX < 0)
+        intCultistSpeedX *= -1;
+    fltCultistX += intCultistSpeedX;
+    fltCultistY = 500;
   }
 }
