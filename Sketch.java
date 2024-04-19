@@ -62,8 +62,8 @@ public class Sketch extends PApplet {
     image(imgDevotee, 0, 0);
     popMatrix();
 
-    // draws a rectangular cloud above the empress of light
-    fill(255);
+    // draws a rectangular health bar above the empress of light
+    fill(0,255,0);
     rect(fltEmpressLightX - 10, fltEmpressLightY - 20, 90, 15);
 
     // draws the empress of light
